@@ -190,7 +190,13 @@ let senha=prompt("Digite a senha Premium:");
 
 if(senha==="Nero2026"){
 
-let base=90+Math.floor(Math.random()*5);
+let tipo=document.getElementById("tipo").value;
+let base;
+
+if(tipo==="Alta") base=170+Math.floor(Math.random()*31); // 170–200
+else if(tipo==="Media") base=120+Math.floor(Math.random()*30); // 120–149
+else base=70+Math.floor(Math.random()*30); // 70–99
+  
 let dpi=450+Math.floor(Math.random()*150);
 let botao=45+Math.floor(Math.random()*10);
 
