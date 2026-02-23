@@ -7,52 +7,84 @@
 
 <style>
 body {
+    margin: 0;
     background: #000;
     font-family: Arial, sans-serif;
     color: white;
+    overflow-x: hidden;
     text-align: center;
 }
 
+/* Partículas */
+canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -1;
+}
+
 .container {
-    max-width: 400px;
+    max-width: 420px;
     margin: auto;
     padding: 20px;
+}
+
+h1 {
+    color: orange;
+    text-shadow: 0 0 20px orange;
+}
+
+.card {
+    background: rgba(20,20,20,0.9);
+    padding: 20px;
+    border-radius: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 0 25px rgba(255,140,0,0.5);
+    backdrop-filter: blur(10px);
 }
 
 select, button {
     width: 100%;
     padding: 12px;
     margin: 10px 0;
-    border-radius: 10px;
+    border-radius: 12px;
     border: none;
+    font-size: 16px;
 }
 
 button {
-    background: orange;
-    color: black;
+    background: linear-gradient(45deg, orange, gold);
     font-weight: bold;
     cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 15px orange;
 }
 
 .resultado {
-    margin-top: 20px;
-    font-size: 18px;
+    margin-top: 15px;
     color: #00ffc8;
     animation: aparecer 0.4s ease-in-out;
 }
 
 @keyframes aparecer {
-    from { opacity: 0; transform: translateY(10px); }
+    from { opacity: 0; transform: translateY(15px); }
     to { opacity: 1; transform: translateY(0); }
 }
 
 .copy-btn {
     background: #00ffc8;
+    color: black;
     margin-top: 10px;
 }
+
 .social {
-    margin-top: 30px;
+    margin-top: 20px;
 }
+
 a {
     color: orange;
     text-decoration: none;
@@ -62,78 +94,129 @@ a {
 
 <body>
 
+<canvas id="bg"></canvas>
+
 <div class="container">
 
 <h1>🔥 SENSIFY RLZ 🔥</h1>
 
+<div class="card">
+
+<select id="marca">
+<option>Samsung</option>
+<option>Xiaomi</option>
+<option>Motorola</option>
+<option>iPhone</option>
+</select>
+
+<select id="modelo">
+<option>Galaxy A14</option>
+<option>Redmi Note</option>
+<option>Moto G</option>
+<option>iPhone 11</option>
+</select>
+
 <select id="tipo">
-    <option>Alta</option>
-    <option>Media</option>
-    <option>Baixa</option>
+<option>Alta</option>
+<option>Media</option>
+<option>Baixa</option>
 </select>
 
 <button onclick="gerar()">Gerar Sensibilidade</button>
 
 <div id="resultado"></div>
 
-<div class="social">
-    <p>📸 Instagram: <a href="https://instagram.com/rlz.netto" target="_blank">@rlz.netto</a></p>
-    <p>🎵 TikTok: <a href="https://tiktok.com/@nero_doidao" target="_blank">@nero_doidao</a></p>
 </div>
 
-<p style="margin-top:20px;">👥 Visitas: <span id="contador">Carregando...</span></p>
+<div class="social">
+<p>📸 Instagram: <a href="https://instagram.com/rlz.netto" target="_blank">@rlz.netto</a></p>
+<p>🎵 TikTok: <a href="https://tiktok.com/@nero_doidao" target="_blank">@nero_doidao</a></p>
+<p>👥 Visitas: <span id="contador">Carregando...</span></p>
+</div>
 
 </div>
 
 <script>
 function gerar() {
 
-    const tipo = document.getElementById("tipo").value;
-    let base;
+let tipo = document.getElementById("tipo").value;
+let base;
 
-    if (tipo === "Alta") {
-        base = Math.floor(Math.random() * 15) + 80;
-    } else if (tipo === "Media") {
-        base = Math.floor(Math.random() * 15) + 60;
-    } else {
-        base = Math.floor(Math.random() * 15) + 40;
-    }
+if (tipo === "Alta") base = Math.floor(Math.random() * 10) + 85;
+else if (tipo === "Media") base = Math.floor(Math.random() * 15) + 65;
+else base = Math.floor(Math.random() * 20) + 40;
 
-    const geral = base;
-    const vermelho = base - 5;
-    const mira2x = base - 10;
-    const mira4x = base - 15;
-    const awm = base - 20;
-    const olhadinha = base - 3;
+let geral = base;
+let vermelho = base - 5;
+let mira2x = base - 10;
+let mira4x = base - 15;
+let awm = base - 20;
+let olhadinha = base - 3;
 
-    const texto = `
-    🎯 Geral: ${geral}
-    🔴 Ponto Vermelho: ${vermelho}
-    🔭 2x: ${mira2x}
-    🔭 4x: ${mira4x}
-    🎯 AWM: ${awm}
-    👀 Olhadinha: ${olhadinha}
-    `;
+let texto = `
+🎯 Geral: ${geral}
+🔴 Ponto Vermelho: ${vermelho}
+🔭 2x: ${mira2x}
+🔭 4x: ${mira4x}
+🎯 AWM: ${awm}
+👀 Olhadinha: ${olhadinha}
+`;
 
-    document.getElementById("resultado").innerHTML = `
-        <div class="resultado">
-            ${texto.replace(/\n/g,"<br>")}
-            <button class="copy-btn" onclick="copiar(\`${texto}\`)">Copiar Sensibilidade</button>
-        </div>
-    `;
+document.getElementById("resultado").innerHTML = `
+<div class="resultado">
+${texto.replace(/\n/g,"<br>")}
+<button class="copy-btn" onclick="copiar(\`${texto}\`)">Copiar Sensibilidade</button>
+</div>
+`;
+
 }
 
 function copiar(texto) {
-    navigator.clipboard.writeText(texto);
-    alert("Sensibilidade copiada!");
+navigator.clipboard.writeText(texto);
+alert("Sensibilidade copiada!");
 }
 
 /* CONTADOR REAL */
-fetch("https://api.countapi.xyz/hit/sensify-rlz/visitas")
+fetch("https://api.countapi.xyz/hit/sensify-rlz-ultra/visitas")
 .then(res => res.json())
 .then(data => {
-    document.getElementById("contador").innerText = data.value;
+document.getElementById("contador").innerText = data.value;
 });
+
+/* Partículas */
+const canvas = document.getElementById("bg");
+const ctx = canvas.getContext("2d");
+
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+let particles = [];
+
+for(let i=0;i<80;i++){
+particles.push({
+x: Math.random()*canvas.width,
+y: Math.random()*canvas.height,
+r: Math.random()*2,
+dx: (Math.random()-0.5),
+dy: (Math.random()-0.5)
+});
+}
+
+function animate(){
+ctx.clearRect(0,0,canvas.width,canvas.height);
+ctx.fillStyle="orange";
+particles.forEach(p=>{
+ctx.beginPath();
+ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+ctx.fill();
+p.x+=p.dx;
+p.y+=p.dy;
+if(p.x<0||p.x>canvas.width)p.dx*=-1;
+if(p.y<0||p.y>canvas.height)p.dy*=-1;
+});
+requestAnimationFrame(animate);
+}
+animate();
 </script>
 
 </body>
