@@ -6,95 +6,82 @@
 <title>Sensify RLZ</title>
 
 <style>
-body {
-    margin: 0;
-    background: #000;
-    font-family: Arial, sans-serif;
-    color: white;
-    overflow-x: hidden;
-    text-align: center;
+body{
+background:#000;
+font-family:Arial;
+color:white;
+text-align:center;
+margin:0;
 }
 
-/* Partículas */
-canvas {
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: -1;
+.container{
+max-width:450px;
+margin:auto;
+padding:20px;
 }
 
-.container {
-    max-width: 420px;
-    margin: auto;
-    padding: 20px;
+.card{
+background:#111;
+padding:20px;
+border-radius:20px;
+margin-bottom:20px;
+box-shadow:0 0 25px rgba(255,140,0,0.4);
 }
 
-h1 {
-    color: orange;
-    text-shadow: 0 0 20px orange;
+h1{
+color:orange;
+text-shadow:0 0 15px orange;
 }
 
-.card {
-    background: rgba(20,20,20,0.9);
-    padding: 20px;
-    border-radius: 20px;
-    margin-bottom: 20px;
-    box-shadow: 0 0 25px rgba(255,140,0,0.5);
-    backdrop-filter: blur(10px);
+select,input,button,textarea{
+width:100%;
+padding:12px;
+margin:8px 0;
+border-radius:12px;
+border:none;
+font-size:15px;
 }
 
-select, button {
-    width: 100%;
-    padding: 12px;
-    margin: 10px 0;
-    border-radius: 12px;
-    border: none;
-    font-size: 16px;
+button{
+background:linear-gradient(45deg,orange,gold);
+font-weight:bold;
+cursor:pointer;
 }
 
-button {
-    background: linear-gradient(45deg, orange, gold);
-    font-weight: bold;
-    cursor: pointer;
-    transition: 0.3s;
+button:hover{
+transform:scale(1.03);
 }
 
-button:hover {
-    transform: scale(1.05);
-    box-shadow: 0 0 15px orange;
+.resultado{
+margin-top:15px;
+color:#00ffc8;
+animation:fade 0.4s ease-in-out;
 }
 
-.resultado {
-    margin-top: 15px;
-    color: #00ffc8;
-    animation: aparecer 0.4s ease-in-out;
+@keyframes fade{
+from{opacity:0;transform:translateY(10px);}
+to{opacity:1;transform:translateY(0);}
 }
 
-@keyframes aparecer {
-    from { opacity: 0; transform: translateY(15px); }
-    to { opacity: 1; transform: translateY(0); }
+.stars span{
+font-size:25px;
+cursor:pointer;
+color:gray;
 }
 
-.copy-btn {
-    background: #00ffc8;
-    color: black;
-    margin-top: 10px;
+.stars span.active{
+color:gold;
 }
 
-.social {
-    margin-top: 20px;
-}
-
-a {
-    color: orange;
-    text-decoration: none;
+footer{
+margin-top:20px;
+font-size:13px;
+color:#aaa;
 }
 </style>
 </head>
 
 <body>
-
-<canvas id="bg"></canvas>
 
 <div class="container">
 
@@ -102,19 +89,14 @@ a {
 
 <div class="card">
 
-<select id="marca">
+<select id="marca" onchange="atualizarModelos()">
 <option>Samsung</option>
 <option>Xiaomi</option>
 <option>Motorola</option>
 <option>iPhone</option>
 </select>
 
-<select id="modelo">
-<option>Galaxy A14</option>
-<option>Redmi Note</option>
-<option>Moto G</option>
-<option>iPhone 11</option>
-</select>
+<select id="modelo"></select>
 
 <select id="tipo">
 <option>Alta</option>
@@ -122,101 +104,141 @@ a {
 <option>Baixa</option>
 </select>
 
-<button onclick="gerar()">Gerar Sensibilidade</button>
+<button onclick="gerar()">Gerar Sensibilidade Inteligente</button>
+<button onclick="premium()">Sensi Premium 🔐</button>
 
 <div id="resultado"></div>
 
 </div>
 
-<div class="social">
-<p>📸 Instagram: <a href="https://instagram.com/rlz.netto" target="_blank">@rlz.netto</a></p>
-<p>🎵 TikTok: <a href="https://tiktok.com/@nero_doidao" target="_blank">@nero_doidao</a></p>
-<p>👥 Visitas: <span id="contador">Carregando...</span></p>
+<div class="card">
+
+<h3>⭐ Avaliação</h3>
+
+<div class="stars" id="stars">
+<span onclick="avaliar(1)">★</span>
+<span onclick="avaliar(2)">★</span>
+<span onclick="avaliar(3)">★</span>
+<span onclick="avaliar(4)">★</span>
+<span onclick="avaliar(5)">★</span>
 </div>
+
+<textarea placeholder="Deixe uma mensagem..."></textarea>
+
+</div>
+
+<footer>
+© 2026 Sensify RLZ - Todos os direitos reservados
+</footer>
 
 </div>
 
 <script>
-function gerar() {
 
-let tipo = document.getElementById("tipo").value;
+const modelos={
+Samsung:["Galaxy A14","Galaxy A34","Galaxy S20","Galaxy S21","Galaxy S23"],
+Xiaomi:["Redmi Note 8","Redmi Note 10","Poco X3","Poco X5"],
+Motorola:["Moto G20","Moto G60","Edge 20"],
+iPhone:["iPhone 11","iPhone 12","iPhone 13","iPhone 14"]
+};
+
+function atualizarModelos(){
+let marca=document.getElementById("marca").value;
+let modeloSelect=document.getElementById("modelo");
+modeloSelect.innerHTML="";
+modelos[marca].forEach(m=>{
+let opt=document.createElement("option");
+opt.textContent=m;
+modeloSelect.appendChild(opt);
+});
+}
+atualizarModelos();
+
+function gerar(){
+
+let tipo=document.getElementById("tipo").value;
+
 let base;
 
-if (tipo === "Alta") base = Math.floor(Math.random() * 10) + 85;
-else if (tipo === "Media") base = Math.floor(Math.random() * 15) + 65;
-else base = Math.floor(Math.random() * 20) + 40;
+if(tipo==="Alta") base=85+Math.floor(Math.random()*10);
+else if(tipo==="Media") base=65+Math.floor(Math.random()*15);
+else base=40+Math.floor(Math.random()*20);
 
-let geral = base;
-let vermelho = base - 5;
-let mira2x = base - 10;
-let mira4x = base - 15;
-let awm = base - 20;
-let olhadinha = base - 3;
+let dpi=300+Math.floor(Math.random()*200);
 
-let texto = `
-🎯 Geral: ${geral}
-🔴 Ponto Vermelho: ${vermelho}
-🔭 2x: ${mira2x}
-🔭 4x: ${mira4x}
-🎯 AWM: ${awm}
-👀 Olhadinha: ${olhadinha}
+let resultado=`
+🎯 Geral: ${base}
+🔴 Ponto Vermelho: ${base-5}
+🔭 2x: ${base-10}
+🔭 4x: ${base-15}
+🎯 AWM: ${base-20}
+👀 Olhadinha: ${base-3}
+
+🧠 DPI Recomendada: ${dpi}
 `;
 
-document.getElementById("resultado").innerHTML = `
-<div class="resultado">
-${texto.replace(/\n/g,"<br>")}
-<button class="copy-btn" onclick="copiar(\`${texto}\`)">Copiar Sensibilidade</button>
-</div>
-`;
-
+document.getElementById("resultado").innerHTML=
+`<div class="resultado">
+${resultado.replace(/\n/g,"<br>")}
+<button onclick="copiar(\`${resultado}\`)">Copiar</button>
+</div>`;
 }
 
-function copiar(texto) {
+function premium(){
+
+let senha=prompt("Digite a senha Premium:");
+
+if(senha==="Nero2026"){
+
+let base=90+Math.floor(Math.random()*5);
+let dpi=450+Math.floor(Math.random()*150);
+let botao=45+Math.floor(Math.random()*10);
+
+let resultado=`
+🔥 SENSI PREMIUM 🔥
+
+🎯 Geral: ${base}
+🔴 Ponto Vermelho: ${base-3}
+🔭 2x: ${base-6}
+🔭 4x: ${base-9}
+🎯 AWM: ${base-12}
+👀 Olhadinha: ${base-2}
+
+🧠 DPI Personalizada: ${dpi}
+🎮 Tamanho do Botão: ${botao}%
+
+⚡ Ajuste fino para movimentação rápida
+⚡ Ideal para HS consistente
+⚡ Melhor resposta em dispositivos médios
+`;
+
+document.getElementById("resultado").innerHTML=
+`<div class="resultado">
+${resultado.replace(/\n/g,"<br>")}
+<button onclick="copiar(\`${resultado}\`)">Copiar Premium</button>
+</div>`;
+
+}else{
+alert("Senha incorreta!");
+}
+}
+
+function copiar(texto){
 navigator.clipboard.writeText(texto);
-alert("Sensibilidade copiada!");
+alert("Copiado!");
 }
 
-/* CONTADOR REAL */
-fetch("https://api.countapi.xyz/hit/sensify-rlz-ultra/visitas")
-.then(res => res.json())
-.then(data => {
-document.getElementById("contador").innerText = data.value;
+function avaliar(n){
+let stars=document.querySelectorAll("#stars span");
+stars.forEach((s,i)=>{
+s.classList.toggle("active",i<n);
 });
-
-/* Partículas */
-const canvas = document.getElementById("bg");
-const ctx = canvas.getContext("2d");
-
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
-
-let particles = [];
-
-for(let i=0;i<80;i++){
-particles.push({
-x: Math.random()*canvas.width,
-y: Math.random()*canvas.height,
-r: Math.random()*2,
-dx: (Math.random()-0.5),
-dy: (Math.random()-0.5)
-});
+localStorage.setItem("avaliacao",n);
 }
 
-function animate(){
-ctx.clearRect(0,0,canvas.width,canvas.height);
-ctx.fillStyle="orange";
-particles.forEach(p=>{
-ctx.beginPath();
-ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
-ctx.fill();
-p.x+=p.dx;
-p.y+=p.dy;
-if(p.x<0||p.x>canvas.width)p.dx*=-1;
-if(p.y<0||p.y>canvas.height)p.dy*=-1;
-});
-requestAnimationFrame(animate);
-}
-animate();
+let saved=localStorage.getItem("avaliacao");
+if(saved) avaliar(saved);
+
 </script>
 
 </body>
