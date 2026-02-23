@@ -1,235 +1,138 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Sensify RLZ</title>
 
-<script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
-
 <style>
 body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: #000;
-  color: white;
-}
-
-#particles-js {
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  z-index: -1;
+    background: #000;
+    font-family: Arial, sans-serif;
+    color: white;
+    text-align: center;
 }
 
 .container {
-  max-width: 400px;
-  margin: auto;
-  padding: 20px;
+    max-width: 400px;
+    margin: auto;
+    padding: 20px;
 }
 
-h1 {
-  text-align: center;
-  color: orange;
-}
-
-.card {
-  background: rgba(17,17,17,0.95);
-  padding: 20px;
-  border-radius: 15px;
-  margin-bottom: 20px;
-  box-shadow: 0 0 20px rgba(255,140,0,0.4);
-}
-
-select, button, textarea {
-  width: 100%;
-  padding: 10px;
-  margin-top: 10px;
-  border-radius: 10px;
-  border: none;
-  font-size: 16px;
+select, button {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border-radius: 10px;
+    border: none;
 }
 
 button {
-  background: orange;
-  color: black;
-  font-weight: bold;
-  cursor: pointer;
-  transition: 0.3s;
+    background: orange;
+    color: black;
+    font-weight: bold;
+    cursor: pointer;
 }
 
-button:hover {
-  background: #ffb347;
-  box-shadow: 0 0 20px orange;
+.resultado {
+    margin-top: 20px;
+    font-size: 18px;
+    color: #00ffc8;
+    animation: aparecer 0.4s ease-in-out;
 }
 
-.result {
-  margin-top: 15px;
-  font-size: 18px;
-  text-align: center;
-  color: #00ffcc;
+@keyframes aparecer {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
-textarea {
-  resize: none;
-  height: 60px;
+.copy-btn {
+    background: #00ffc8;
+    margin-top: 10px;
 }
-
 .social {
-  text-align: center;
-  margin-top: 20px;
+    margin-top: 30px;
 }
-
-.social a {
-  color: orange;
-  text-decoration: none;
-  font-weight: bold;
-  display: block;
-  margin-top: 8px;
-}
-
-.footer {
-  text-align: center;
-  margin-top: 20px;
-  font-size: 14px;
-  color: #aaa;
+a {
+    color: orange;
+    text-decoration: none;
 }
 </style>
 </head>
 
 <body>
 
-<div id="particles-js"></div>
-
 <div class="container">
 
 <h1>🔥 SENSIFY RLZ 🔥</h1>
 
-<div class="card">
-<h3>📱 Marca</h3>
-<select id="marca">
-<option>Samsung</option>
-<option>Xiaomi</option>
-<option>Motorola</option>
-<option>iPhone</option>
-<option>Realme</option>
-<option>Poco</option>
-<option>Infinix</option>
-</select>
-
-<h3>📲 Modelo</h3>
-<select id="modelo">
-<option>Galaxy A14</option>
-<option>Galaxy S23</option>
-<option>Redmi Note 12</option>
-<option>iPhone 13</option>
-<option>Moto G54</option>
-<option>Poco X5</option>
-<option>Realme C55</option>
-</select>
-
-<h3>🎯 Tipo de Sensibilidade</h3>
 <select id="tipo">
-<option>Alta</option>
-<option>Média</option>
-<option>Baixa</option>
+    <option>Alta</option>
+    <option>Media</option>
+    <option>Baixa</option>
 </select>
 
 <button onclick="gerar()">Gerar Sensibilidade</button>
-<div class="result" id="resultado"></div>
-</div>
 
-<div class="card">
-<h3>🎮 Crie seu Nick de Free Fire</h3>
-<button onclick="gerarNick()">Gerar Nick</button>
-<div class="result" id="nick"></div>
-</div>
-
-<div class="card">
-<h3>⭐ Avaliação</h3>
-<select id="avaliacao">
-<option value="1">1 ⭐</option>
-<option value="2">2 ⭐⭐</option>
-<option value="3">3 ⭐⭐⭐</option>
-<option value="4">4 ⭐⭐⭐⭐</option>
-<option value="5">5 ⭐⭐⭐⭐⭐</option>
-</select>
-
-<textarea placeholder="Mensagem opcional..."></textarea>
-<button onclick="avaliar()">Enviar Avaliação</button>
-<div class="result" id="msgAvaliacao"></div>
-</div>
-
-<div class="card">
-<h3>👀 Visitas</h3>
-<div class="result">
-<img src="https://api.visitorbadge.io/api/visitors?path=sensifyrlz&countColor=%23ff9900" />
-</div>
-</div>
+<div id="resultado"></div>
 
 <div class="social">
-<a href="https://instagram.com/SEUINSTAGRAM" target="_blank">📸 Instagram</a>
-<a href="https://tiktok.com/@SEUTIKTOK" target="_blank">🎵 TikTok</a>
+    <p>📸 Instagram: <a href="https://instagram.com/rlz.netto" target="_blank">@rlz.netto</a></p>
+    <p>🎵 TikTok: <a href="https://tiktok.com/@nero_doidao" target="_blank">@nero_doidao</a></p>
 </div>
 
-<div class="footer">
-© 2026 Sensify RLZ
-</div>
+<p style="margin-top:20px;">👥 Visitas: <span id="contador">Carregando...</span></p>
 
 </div>
 
 <script>
-function gerar(){
-  let tipo = document.getElementById("tipo").value;
-  let valor;
+function gerar() {
 
-  if(tipo === "Alta"){
-    valor = Math.floor(Math.random() * 30) + 170;
-  } else if(tipo === "Média"){
-    valor = Math.floor(Math.random() * 40) + 100;
-  } else {
-    valor = Math.floor(Math.random() * 40) + 50;
-  }
+    const tipo = document.getElementById("tipo").value;
+    let base;
 
-  document.getElementById("resultado").innerText = "Sensibilidade Recomendada: " + valor;
-}
-
-function gerarNick(){
-  let simbolos = ["亗","么","ツ","✿","๖ۣۜ","彡","乂","ঔ","ฬ","۝"];
-  let base = ["RLZ","XIT","PRO","FF","GOD","HS"];
-  let s1 = simbolos[Math.floor(Math.random()*simbolos.length)];
-  let s2 = simbolos[Math.floor(Math.random()*simbolos.length)];
-  let nome = base[Math.floor(Math.random()*base.length)];
-  document.getElementById("nick").innerText = s1 + nome + s2;
-}
-
-function avaliar(){
-  if(localStorage.getItem("avaliado")){
-    document.getElementById("msgAvaliacao").innerText = "Você já avaliou!";
-    return;
-  }
-
-  let estrelas = document.getElementById("avaliacao").value;
-  localStorage.setItem("avaliado", true);
-
-  document.getElementById("msgAvaliacao").innerText =
-    "Obrigado pela avaliação de " + estrelas + " ⭐!";
-}
-
-particlesJS("particles-js", {
-  particles: {
-    number: { value: 60 },
-    color: { value: "#ff9900" },
-    shape: { type: "circle" },
-    opacity: { value: 0.5 },
-    size: { value: 3 },
-    move: { enable: true, speed: 2 }
-  },
-  interactivity: {
-    events: {
-      onhover: { enable: true, mode: "repulse" }
+    if (tipo === "Alta") {
+        base = Math.floor(Math.random() * 15) + 80;
+    } else if (tipo === "Media") {
+        base = Math.floor(Math.random() * 15) + 60;
+    } else {
+        base = Math.floor(Math.random() * 15) + 40;
     }
-  }
+
+    const geral = base;
+    const vermelho = base - 5;
+    const mira2x = base - 10;
+    const mira4x = base - 15;
+    const awm = base - 20;
+    const olhadinha = base - 3;
+
+    const texto = `
+    🎯 Geral: ${geral}
+    🔴 Ponto Vermelho: ${vermelho}
+    🔭 2x: ${mira2x}
+    🔭 4x: ${mira4x}
+    🎯 AWM: ${awm}
+    👀 Olhadinha: ${olhadinha}
+    `;
+
+    document.getElementById("resultado").innerHTML = `
+        <div class="resultado">
+            ${texto.replace(/\n/g,"<br>")}
+            <button class="copy-btn" onclick="copiar(\`${texto}\`)">Copiar Sensibilidade</button>
+        </div>
+    `;
+}
+
+function copiar(texto) {
+    navigator.clipboard.writeText(texto);
+    alert("Sensibilidade copiada!");
+}
+
+/* CONTADOR REAL */
+fetch("https://api.countapi.xyz/hit/sensify-rlz/visitas")
+.then(res => res.json())
+.then(data => {
+    document.getElementById("contador").innerText = data.value;
 });
 </script>
 
