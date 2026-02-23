@@ -1,205 +1,236 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Gerador RLZ Pro</title>
+<title>Sensify RLZ</title>
+
+<script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
 
 <style>
-body{
-    margin:0;
-    font-family:Arial;
-    background:linear-gradient(135deg,#0f0f0f,#1a1a1a,#000);
-    color:white;
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #000;
+  color: white;
 }
 
-.container{
-    max-width:950px;
-    margin:auto;
-    padding:20px;
+#particles-js {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
 }
 
-h1{
-    text-align:center;
-    color:#ff9900;
+.container {
+  max-width: 400px;
+  margin: auto;
+  padding: 20px;
 }
 
-.card{
-    background:#1b1b1b;
-    padding:20px;
-    border-radius:12px;
-    margin-bottom:25px;
-    box-shadow:0 0 20px black;
+h1 {
+  text-align: center;
+  color: orange;
 }
 
-select,input,button{
-    width:100%;
-    padding:10px;
-    margin-top:10px;
-    border-radius:8px;
-    border:none;
+.card {
+  background: rgba(17,17,17,0.95);
+  padding: 20px;
+  border-radius: 15px;
+  margin-bottom: 20px;
+  box-shadow: 0 0 20px rgba(255,140,0,0.4);
 }
 
-button{
-    background:#ff9900;
-    font-weight:bold;
-    cursor:pointer;
+select, button, textarea {
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+  border-radius: 10px;
+  border: none;
+  font-size: 16px;
 }
 
-.resultado{
-    margin-top:15px;
-    background:#111;
-    padding:15px;
-    border-radius:10px;
+button {
+  background: orange;
+  color: black;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
 }
 
-footer{
-    text-align:center;
-    margin-top:30px;
-    font-size:14px;
-    color:#aaa;
+button:hover {
+  background: #ffb347;
+  box-shadow: 0 0 20px orange;
+}
+
+.result {
+  margin-top: 15px;
+  font-size: 18px;
+  text-align: center;
+  color: #00ffcc;
+}
+
+textarea {
+  resize: none;
+  height: 60px;
+}
+
+.social {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.social a {
+  color: orange;
+  text-decoration: none;
+  font-weight: bold;
+  display: block;
+  margin-top: 8px;
+}
+
+.footer {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 14px;
+  color: #aaa;
 }
 </style>
 </head>
+
 <body>
+
+<div id="particles-js"></div>
 
 <div class="container">
 
-<h1>🔥 GERADOR RLZ SENSI PRO 🔥</h1>
+<h1>🔥 SENSIFY RLZ 🔥</h1>
 
 <div class="card">
-<h2>📱 Marca e Modelo</h2>
-
-<select id="marca" onchange="carregarModelos()">
-<option value="">Selecione a Marca</option>
-<option value="Apple">Apple</option>
-<option value="Samsung">Samsung</option>
-<option value="Xiaomi">Xiaomi</option>
-<option value="Motorola">Motorola</option>
-<option value="Realme">Realme</option>
+<h3>📱 Marca</h3>
+<select id="marca">
+<option>Samsung</option>
+<option>Xiaomi</option>
+<option>Motorola</option>
+<option>iPhone</option>
+<option>Realme</option>
+<option>Poco</option>
+<option>Infinix</option>
 </select>
 
+<h3>📲 Modelo</h3>
 <select id="modelo">
-<option>Selecione o Modelo</option>
+<option>Galaxy A14</option>
+<option>Galaxy S23</option>
+<option>Redmi Note 12</option>
+<option>iPhone 13</option>
+<option>Moto G54</option>
+<option>Poco X5</option>
+<option>Realme C55</option>
 </select>
 
-<input type="number" id="dpiInput" placeholder="Digite sua DPI (490 a 980)">
+<h3>🎯 Tipo de Sensibilidade</h3>
+<select id="tipo">
+<option>Alta</option>
+<option>Média</option>
+<option>Baixa</option>
+</select>
+
+<button onclick="gerar()">Gerar Sensibilidade</button>
+<div class="result" id="resultado"></div>
 </div>
 
 <div class="card">
-<h2>🎯 Tipo de Sensibilidade</h2>
-
-<select id="tipoSensi">
-<option value="">Escolha o Tipo</option>
-<option value="baixa">Baixa (0 - 100)</option>
-<option value="media">Média (50 - 150)</option>
-<option value="alta">Alta (100 - 200)</option>
-</select>
-
-<button onclick="gerarSensi()">Gerar Sensibilidade</button>
-
-<div class="resultado" id="resultado"></div>
+<h3>🎮 Crie seu Nick de Free Fire</h3>
+<button onclick="gerarNick()">Gerar Nick</button>
+<div class="result" id="nick"></div>
 </div>
 
 <div class="card">
-<h2>⭐ Avaliações</h2>
-<button onclick="avaliar()">Avaliar</button>
-<p>Total de Avaliações: <span id="totalAval"></span></p>
+<h3>⭐ Avaliação</h3>
+<select id="avaliacao">
+<option value="1">1 ⭐</option>
+<option value="2">2 ⭐⭐</option>
+<option value="3">3 ⭐⭐⭐</option>
+<option value="4">4 ⭐⭐⭐⭐</option>
+<option value="5">5 ⭐⭐⭐⭐⭐</option>
+</select>
+
+<textarea placeholder="Mensagem opcional..."></textarea>
+<button onclick="avaliar()">Enviar Avaliação</button>
+<div class="result" id="msgAvaliacao"></div>
 </div>
 
-<footer>
-📊 Visitas: <span id="visitas"></span><br>
-📸 Instagram: @rlz.netto<br>
-🎵 TikTok: @nero_doidao<br>
-© 2026 RLZ NETTO
-</footer>
+<div class="card">
+<h3>👀 Visitas</h3>
+<div class="result">
+<img src="https://api.visitorbadge.io/api/visitors?path=sensifyrlz&countColor=%23ff9900" />
+</div>
+</div>
+
+<div class="social">
+<a href="https://instagram.com/SEUINSTAGRAM" target="_blank">📸 Instagram</a>
+<a href="https://tiktok.com/@SEUTIKTOK" target="_blank">🎵 TikTok</a>
+</div>
+
+<div class="footer">
+© 2026 Sensify RLZ
+</div>
 
 </div>
 
 <script>
+function gerar(){
+  let tipo = document.getElementById("tipo").value;
+  let valor;
 
-const modelos = {
-Apple:["iPhone 11","iPhone 12","iPhone 13","iPhone 14","iPhone 15"],
-Samsung:["Galaxy S20","Galaxy S21","Galaxy S22","Galaxy S23","Galaxy S24"],
-Xiaomi:["Redmi Note 10","Note 11","Note 12","Poco X5","Poco X6"],
-Motorola:["Moto G60","G73","Edge 30","Edge 40"],
-Realme:["Realme 9","Realme 10","C55"]
-};
+  if(tipo === "Alta"){
+    valor = Math.floor(Math.random() * 30) + 170;
+  } else if(tipo === "Média"){
+    valor = Math.floor(Math.random() * 40) + 100;
+  } else {
+    valor = Math.floor(Math.random() * 40) + 50;
+  }
 
-function carregarModelos(){
-let marca = document.getElementById("marca").value;
-let modeloSelect = document.getElementById("modelo");
-modeloSelect.innerHTML="<option>Selecione o Modelo</option>";
-
-if(modelos[marca]){
-modelos[marca].forEach(function(m){
-let opt=document.createElement("option");
-opt.value=m;
-opt.innerHTML=m;
-modeloSelect.appendChild(opt);
-});
-}
+  document.getElementById("resultado").innerText = "Sensibilidade Recomendada: " + valor;
 }
 
-function gerarNumero(min,max){
-return Math.floor(Math.random()*(max-min+1))+min;
-}
-
-function gerarSensi(){
-
-let tipo=document.getElementById("tipoSensi").value;
-let dpi=document.getElementById("dpiInput").value;
-let resultado=document.getElementById("resultado");
-
-if(!tipo || !dpi){
-resultado.innerHTML="Preencha todas as informações!";
-return;
-}
-
-let min,max;
-
-if(tipo=="baixa"){min=0;max=100;}
-if(tipo=="media"){min=50;max=150;}
-if(tipo=="alta"){min=100;max=200;}
-
-let geral=gerarNumero(min,max);
-let red=gerarNumero(min,max);
-let x2=gerarNumero(min,max);
-let x4=gerarNumero(min,max);
-let awm=gerarNumero(min,max);
-let camera=gerarNumero(min,max);
-
-resultado.innerHTML=`
-<h3>📊 Sua Sensibilidade</h3>
-Geral: ${geral}<br>
-Ponto Vermelho: ${red}<br>
-2x: ${x2}<br>
-4x: ${x4}<br>
-AWM: ${awm}<br>
-Botão Câmera Livre: ${camera}<br><br>
-🔥 DPI recomendada para sua Sensibilidade: ${gerarNumero(490,980)}
-`;
-}
-
-if(localStorage.visitas){
-localStorage.visitas=Number(localStorage.visitas)+1;
-}else{
-localStorage.visitas=1;
-}
-document.getElementById("visitas").innerText=localStorage.visitas;
-
-if(localStorage.avaliacoes){
-document.getElementById("totalAval").innerText=localStorage.avaliacoes;
-}else{
-localStorage.avaliacoes=0;
-document.getElementById("totalAval").innerText=0;
+function gerarNick(){
+  let simbolos = ["亗","么","ツ","✿","๖ۣۜ","彡","乂","ঔ","ฬ","۝"];
+  let base = ["RLZ","XIT","PRO","FF","GOD","HS"];
+  let s1 = simbolos[Math.floor(Math.random()*simbolos.length)];
+  let s2 = simbolos[Math.floor(Math.random()*simbolos.length)];
+  let nome = base[Math.floor(Math.random()*base.length)];
+  document.getElementById("nick").innerText = s1 + nome + s2;
 }
 
 function avaliar(){
-localStorage.avaliacoes=Number(localStorage.avaliacoes)+1;
-document.getElementById("totalAval").innerText=localStorage.avaliacoes;
+  if(localStorage.getItem("avaliado")){
+    document.getElementById("msgAvaliacao").innerText = "Você já avaliou!";
+    return;
+  }
+
+  let estrelas = document.getElementById("avaliacao").value;
+  localStorage.setItem("avaliado", true);
+
+  document.getElementById("msgAvaliacao").innerText =
+    "Obrigado pela avaliação de " + estrelas + " ⭐!";
 }
 
+particlesJS("particles-js", {
+  particles: {
+    number: { value: 60 },
+    color: { value: "#ff9900" },
+    shape: { type: "circle" },
+    opacity: { value: 0.5 },
+    size: { value: 3 },
+    move: { enable: true, speed: 2 }
+  },
+  interactivity: {
+    events: {
+      onhover: { enable: true, mode: "repulse" }
+    }
+  }
+});
 </script>
 
 </body>
